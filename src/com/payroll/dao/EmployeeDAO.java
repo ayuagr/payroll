@@ -1,6 +1,5 @@
 package com.payroll.dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,14 +11,14 @@ import com.payroll.pojo.Employee;
 
 public class EmployeeDAO {
 		
-	public Connection getConnection() throws ClassNotFoundException, SQLException{
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/payroll","root","1234");
-		return conn;
-	}
+//	public Connection getConnection() throws ClassNotFoundException, SQLException{
+//		Class.forName("com.mysql.cj.jdbc.Driver");
+//		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/payroll","root","1234");
+//		return conn;
+//	}
 	
 	public void createEmployee(Employee emp) throws ClassNotFoundException, SQLException{
-		Connection conn = getConnection();
+		Connection conn = DBAdmin.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("insert into employee(name,address,salary) values (?,?,?)");
 		stmt.setString(1, emp.getName());
 		stmt.setString(2, emp.getAddrs());
@@ -28,7 +27,7 @@ public class EmployeeDAO {
 	}
 	
 	public Employee getEmployee(long id) throws ClassNotFoundException, SQLException{
-		Connection conn = getConnection();
+		Connection conn = DBAdmin.getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select * from employee where empid = "+ id);
 		rs.next();
@@ -41,7 +40,7 @@ public class EmployeeDAO {
 	}
 	
 	public List<Employee> getAll() throws ClassNotFoundException, SQLException{
-		Connection conn = getConnection();
+		Connection conn = DBAdmin.getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select * from employee");
 		List<Employee> employees = new ArrayList<Employee>();
@@ -57,7 +56,7 @@ public class EmployeeDAO {
 	}
 	
 	public void updateEmployee(Employee emp) throws ClassNotFoundException, SQLException{
-		Connection conn = getConnection();
+		Connection conn = DBAdmin.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("update employee set name=?,address=?,salary=? where empid=?");
 		stmt.setString(1, emp.getName());
 		stmt.setString(2, emp.getAddrs());
@@ -67,7 +66,7 @@ public class EmployeeDAO {
 	}
 	
 	public void deleteEmployee(long id) throws ClassNotFoundException, SQLException{
-		Connection conn = getConnection();
+		Connection conn = DBAdmin.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("delete from employee where empid = ?");
 		stmt.setLong(1,id);
 		stmt.execute();

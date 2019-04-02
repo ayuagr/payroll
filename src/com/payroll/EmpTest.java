@@ -12,14 +12,14 @@ public class EmpTest {
 	
 	public static void main(String args[]) throws Exception{
 		EmpTest obj = new EmpTest();
-		obj.getAllTest();
-		System.out.println("now updating");
-		obj.updateTest();
-		System.out.println("new data");
-		obj.getAllTest();
-		System.out.println("now deleting");
-		obj.deleteTest();
-		System.out.println("new data");
+	//	obj.getAllTest();
+	//	System.out.println("now updating");
+	//	obj.updateTest();
+	//	System.out.println("new data");
+	//	obj.getAllTest();
+	//	System.out.println("now deleting");
+	//	obj.deleteTest();
+	//	System.out.println("new data");
 		obj.getAllTest();
 	}
 	
