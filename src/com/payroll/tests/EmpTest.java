@@ -1,4 +1,4 @@
-package com.payroll;
+package com.payroll.tests;
 
 import java.sql.SQLException;
 import java.util.List;
