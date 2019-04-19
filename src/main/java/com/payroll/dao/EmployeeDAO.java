@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.payroll.pojo.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmployeeDAO {
 		
 //	public Connection getConnection() throws ClassNotFoundException, SQLException{
@@ -16,9 +19,11 @@ public class EmployeeDAO {
 //		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/payroll","root","1234");
 //		return conn;
 //	}
-	
+
+	@Autowired
+	DBAdmin dbAdmin;
 	public void createEmployee(Employee emp) throws ClassNotFoundException, SQLException{
-		Connection conn = DBAdmin.getConnection();
+		Connection conn = dbAdmin.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("insert into employee(name,address,salary) values (?,?,?)");
 		stmt.setString(1, emp.getName());
 		stmt.setString(2, emp.getAddrs());
@@ -27,7 +32,7 @@ public class EmployeeDAO {
 	}
 	
 	public Employee getEmployee(long id) throws ClassNotFoundException, SQLException{
-		Connection conn = DBAdmin.getConnection();
+		Connection conn = dbAdmin.getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select * from employee where empid = "+ id);
 		rs.next();
@@ -40,7 +45,7 @@ public class EmployeeDAO {
 	}
 	
 	public List<Employee> getAll() throws ClassNotFoundException, SQLException{
-		Connection conn = DBAdmin.getConnection();
+		Connection conn = dbAdmin.getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select * from employee");
 		List<Employee> employees = new ArrayList<Employee>();
@@ -56,7 +61,7 @@ public class EmployeeDAO {
 	}
 	
 	public void updateEmployee(Employee emp) throws ClassNotFoundException, SQLException{
-		Connection conn = DBAdmin.getConnection();
+		Connection conn = dbAdmin.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("update employee set name=?,address=?,salary=? where empid=?");
 		stmt.setString(1, emp.getName());
 		stmt.setString(2, emp.getAddrs());
@@ -66,7 +71,7 @@ public class EmployeeDAO {
 	}
 	
 	public void deleteEmployee(long id) throws ClassNotFoundException, SQLException{
-		Connection conn = DBAdmin.getConnection();
+		Connection conn = dbAdmin.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("delete from employee where empid = ?");
 		stmt.setLong(1,id);
 		stmt.execute();

@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBAdmin {
-	public static Connection conn = null;
-	static {
+
+	private Connection conn = null;
+
+	public DBAdmin(String dbname){
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -14,13 +16,14 @@ public class DBAdmin {
 			e.printStackTrace();
 		}
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/payroll","root","1234");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/" + dbname,"root","1234");
 		} catch (SQLException e) {
 			System.out.println("db connection error");
 			e.printStackTrace();
 		}		
 	}
-	public static Connection getConnection() throws ClassNotFoundException, SQLException{		
+
+	public Connection getConnection() {
 		return conn;
 	}
 }

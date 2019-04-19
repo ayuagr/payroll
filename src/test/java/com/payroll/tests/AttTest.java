@@ -1,29 +1,28 @@
 package com.payroll.tests;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Date;
-import java.util.List;
 
 import com.payroll.dao.AttendanceDAO;
 import com.payroll.dao.DBAdmin;
 import com.payroll.pojo.Attendance;
 import com.payroll.pojo.Employee;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+@Service
 public class AttTest {
 
-	static AttendanceDAO at;
-	static long id;
+	@Autowired
+	AttendanceDAO at;
 
-	@BeforeClass
-	public static void setup(){
-		System.out.println("======================================");
-		System.out.println("Testing ATTENDANCE DAO");
-		at = new AttendanceDAO();
-	}
+	@Autowired
+	DBAdmin dbAdmin;
 
-	@Test
+	long id;
+
 	public void crudTest() throws Exception{
 		System.out.println("------------------------------");
 		System.out.println("Testing CRUD OPS");
@@ -76,7 +75,7 @@ public class AttTest {
 	public void createTest() throws Exception {
 		Attendance att = new Attendance(Date.valueOf("1800-12-23"),6,new Employee(2,null,null,0));
 		at.createAtt(att);
-		ResultSet rs = DBAdmin.getConnection().createStatement().executeQuery("select attid from attendance where date='1800-12-23'");
+		ResultSet rs = dbAdmin.getConnection().createStatement().executeQuery("select attid from attendance where date='1800-12-23'");
 		rs.next();
 		id = rs.getLong("attid");
 
